@@ -1,0 +1,160 @@
+syntax = "proto3";
+package com.kambal.school;
+option java_multiple_files = true;
+
+message GradeByIdRequest{
+  string grade_id = 1;
+}
+
+message GradeByIdResponse {
+  int64 id = 1;
+  string name = 2;
+  int32 max_students = 3;
+  ProfessorByIdResponse professor = 4;
+}
+
+message GetGradesRequest {
+  // any request parameters if needed
+}
+message GetGradesResponse {
+  repeated GradeByIdResponse Grades = 1;
+}
+
+message CreateGradeRequest {
+  string name = 1;
+  int64 max_students = 2;
+  ProfessorByIdResponse professor = 4;
+}
+message CreateGradeResponse {
+  GradeByIdResponse Grade = 1;
+}
+
+message UpdateGradeRequest {
+  string Grade_id = 1;
+  string name = 2;
+  int64 max_students = 3;
+}
+message UpdateGradeResponse {
+  GradeByIdResponse updated_Grade = 1;
+}
+
+message DeleteGradeRequest {
+  string Grade_id = 1;
+}
+
+message DeleteGradeResponse {
+  bool success = 1;
+}
+
+message ProfessorByIdRequest{
+  string professor_id = 1;
+}
+
+message ProfessorByIdResponse {
+  int64 id = 1;
+  string firstname = 2;
+  string lastname = 3;
+  string email = 4;
+}
+
+message GetProfessorsRequest {
+  // any request parameters if needed
+}
+message GetProfessorsResponse {
+  repeated ProfessorByIdResponse Professors = 1;
+}
+
+message CreateProfessorRequest {
+  string firstname = 1;
+  string lastname = 2;
+  string emailId = 3;
+}
+message CreateProfessorResponse {
+  ProfessorByIdResponse Professor = 1;
+}
+
+message UpdateProfessorRequest {
+  string Professor_id = 1;
+  string firstname = 2;
+  string lastname = 3;
+  string emailId = 4;
+}
+message UpdateProfessorResponse {
+  ProfessorByIdResponse updated_Professor = 1;
+}
+
+message DeleteProfessorRequest {
+  string Professor_id = 1;
+}
+
+message DeleteProfessorResponse {
+  bool success = 1;
+}
+
+
+message StudentByIdRequest{
+  string student_id = 1;
+}
+message StudentByIdResponse{
+  string student_id = 1;
+  string firstname = 2;
+  string lastname = 3;
+  string emailId = 4;
+  GradeByIdResponse grade = 5;
+}
+
+message GetStudentsRequest {
+  // any request parameters if needed
+}
+message GetStudentsResponse {
+  repeated StudentByIdResponse students = 1;
+}
+
+message CreateStudentRequest {
+  string firstname = 1;
+  string lastname = 2;
+  string emailId = 3;
+  GradeByIdResponse grade = 4;
+}
+message CreateStudentResponse {
+  StudentByIdResponse student = 1;
+}
+
+message UpdateStudentRequest {
+  string student_id = 1;
+  string firstname = 2;
+  string lastname = 3;
+  string emailId = 4;
+}
+message UpdateStudentResponse {
+  StudentByIdResponse updated_student = 1;
+}
+
+message DeleteStudentRequest {
+  string student_id = 1;
+}
+
+message DeleteStudentResponse {
+  bool success = 1;
+}
+
+
+service StudentService{
+  rpc getStudentInfo(StudentByIdRequest) returns (StudentByIdResponse);
+  rpc getStudents(GetStudentsRequest) returns(GetStudentsResponse);
+  rpc createStudent(CreateStudentRequest) returns (CreateStudentResponse);
+  rpc updateStudent(UpdateStudentRequest) returns (StudentByIdResponse);
+  rpc deleteStudent(DeleteStudentRequest) returns (DeleteStudentResponse);
+
+  rpc getProfessorInfo(ProfessorByIdRequest) returns (ProfessorByIdResponse);
+  rpc getProfessors(GetProfessorsRequest) returns(GetProfessorsResponse);
+  rpc createProfessor(CreateProfessorRequest) returns (CreateProfessorResponse);
+  rpc updateProfessor(UpdateProfessorRequest) returns (ProfessorByIdResponse);
+  rpc deleteProfessor(DeleteProfessorRequest) returns (DeleteProfessorResponse);
+
+  rpc getGradeInfo(GradeByIdRequest) returns (GradeByIdResponse);
+  rpc getGrades(GetGradesRequest) returns(GetGradesResponse);
+  rpc createGrade(CreateGradeRequest) returns (CreateGradeResponse);
+  rpc updateGrade(UpdateGradeRequest) returns (GradeByIdResponse);
+  rpc deleteGrade(DeleteGradeRequest) returns (DeleteGradeResponse);
+}
